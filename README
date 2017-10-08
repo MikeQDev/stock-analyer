@@ -11,8 +11,8 @@ Build HTTP request query with provided tickers, and send request to google finan
 Get response from google finance API and write to disk
 
 Issues:
-1) Large queries may take very long to return... Risky if connection is reset.
+----DONE1) Large queries may take very long to return... Risky if connection is reset.
 2) Conflicting exchanges
 Future solutions:
-1) Chunk input file into several requests of N tickers
+----DONE1) Chunk input file into several requests of N tickers
 2) Allow input file to specify stock exchange (NYSE, etc)
