@@ -4,6 +4,7 @@ import sys
 
 # Usage: stocks.py [history in years] [ticker file start at] [ticker file end at]
 
+chunk_size=5
 start_position=-1
 end_position=-1
 period = "5Y"
@@ -35,12 +36,14 @@ with open('tickers') as f:
       break
     count+=1
     params.append({'q':str(line).strip()})
-
-print "Requesting "+str(len(params))+" tickers"
-print "Sending request.."
-df = get_prices_data(params, period)
-print "Request ended after "+str(time.time()-start)+" secs. Writing to csv.."
-df.to_csv('all.csv')
+    if count % chunk_size == 0:
+      print "Sending request for "+str(len(params))+" tickers"
+      request_start_time=time.time()
+      df = get_prices_data(params, period)
+      req_time = time.time()-request_start_time
+      print "Request took "+str(req_time)+" secs ("+str(req_time/chunk_size)+" sec per ticker.) Writing to csv.."
+      params = []
+      df.to_csv(str(count-chunk_size)+'-'+str(count-1)+'.csv')
 
 end = time.time()
 elapsed=end-start
