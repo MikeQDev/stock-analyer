@@ -21,7 +21,7 @@ def setup_logging():
 	log.addHandler(fh)
 	return log
 
-chunk_size=5
+chunk_size=500
 start_position=-1
 end_position=-1
 period = "5Y"
